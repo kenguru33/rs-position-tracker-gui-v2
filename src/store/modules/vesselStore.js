@@ -1,11 +1,12 @@
-import fetchVessels from '../../lib/json-vessel-feed'
-import {vesselStates} from '../../lib/vessel-states'
+import {fetchVessels, vesselStates, vesselStateReasons} from '../../lib/feed-adapter'
+
 export const vesselStore = {
   namespaced: true,
   state: {
     vessels: [],
     selectedVessel: null,
-    vesselStates: vesselStates
+    vesselStates: vesselStates,
+    vesselStateReasons: vesselStateReasons
   },
   getters: {
     vessels: state => {
@@ -19,6 +20,9 @@ export const vesselStore = {
     },
     vesselStates: state => {
       return vesselStates
+    },
+    vesselStateReasons: state => {
+      return vesselStateReasons
     }
   },
   mutations: {

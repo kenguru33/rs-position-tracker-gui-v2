@@ -35,21 +35,12 @@ export const addVesselImageUrl = vessel => {
 }
 
 /**
- * Adds state desription and assosiated color code
+ * Adds state desription and assosiated color code and reason
+ * Sets all reasons to not yet implemented.
  * @param {*} vessel
  */
-export const addStateDescription = vessel => {
-  const stateID = parseInt(vessel.state) - 1
-  vessel.state_description = vesselStates[stateID].state_description
-  vessel.state_color = vesselStates[stateID].state_color
-}
-
-export const sanitizeStation = vessel => {
-  if (!vessel.Station) {
-    vessel.Station = {
-      name: '-'
-    }
-  }
+export const addStateObject = vessel => {
+  vessel.state = vesselStates[vessel.state - 1]
 }
 
 /**
@@ -60,9 +51,8 @@ export const sanitizeVessels = vessels => {
   return vessels.filter(vessel => {
     vessel.mmsi = removeWhiteSpaces(vessel.mmsi)
     vessel.rs = removeWhiteSpaces(vessel.rs)
-    addStateDescription(vessel)
     addVesselImageUrl(vessel)
-    sanitizeStation(vessel)
+    addStateObject(vessel)
     return isValidMMSI(vessel.mmsi) && isValidRSNumber(vessel.rs)
   })
 }

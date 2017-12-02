@@ -9,15 +9,15 @@
               <v-list-tile avatar>
                 <v-list-tile-avatar>
                   <v-avatar>
-                    <img :src="vessel.image_url" :style="{backgroundColor: vessel.state_color}"
+                    <img :src="vessel.image_url" :style="{backgroundColor: vessel.state.color}"
                          class="stateIndicator"/>
                   </v-avatar>
                 </v-list-tile-avatar>
                 <v-list-tile-content>
                   <v-list-tile-title>{{vessel.name}}</v-list-tile-title>
                   <v-list-tile-sub-title>
-                    <v-icon :style="{color: vessel.state_color}" class="stateBullet">lens</v-icon>
-                    {{vessel.state_description}}
+                    <v-icon :style="{color: vessel.state.color}" class="stateBullet">lens</v-icon>
+                    {{vessel.state.description}}
                   </v-list-tile-sub-title>
                 </v-list-tile-content>
               </v-list-tile>
@@ -32,9 +32,9 @@
                       <v-layout row wrap>
                         <v-flex xs12 md6 pr-3 pl-3>
                           <v-select
-                            v-bind:items="stateDescriptions"
+                            v-bind:items="vesselStateDescriptions"
                             v-model="state"
-                            v-bind:label="vessel.state_description"
+                            v-bind:label="vessel.state.description"
                             single-line
                             item-text="state"
                             item-value="abbr"
@@ -45,9 +45,9 @@
                         </v-flex>
                         <v-flex v-if="state!=='Operativ'"xs12 md6 pr-3 pl-3>
                           <v-select
-                            v-bind:items="reasons"
+                            v-bind:items="vesselStateReasons"
                             v-model="reason"
-                            v-bind:label="vessel.state_reason"
+                            v-bind:label="vessel.state.reason"
                             single-line
                             item-text="state"
                             item-value="abbr"
@@ -70,7 +70,7 @@
                     </v-list-tile>
                     <v-list-tile-content>
                       <v-list-tile-title>Posisjon</v-list-tile-title>
-                      <v-list-tile-sub-title>lat: {{vessel.latitude}} lng: {{vessel.longitude}}</v-list-tile-sub-title>
+                      <v-list-tile-sub-title>lat: {{vessel.ais_data.latitude}} lng: {{vessel.ais_data.longitude}}</v-list-tile-sub-title>
                     </v-list-tile-content>
                   </v-list-tile>
                   <v-list-tile avatar>
@@ -79,12 +79,12 @@
                     </v-list-tile>
                     <v-list-tile-content>
                       <v-list-tile-title>Kurs og fart</v-list-tile-title>
-                      <v-list-tile-sub-title>{{vessel.cog}}° / {{vessel.sog}} knop</v-list-tile-sub-title>
+                      <v-list-tile-sub-title>{{vessel.ais_data.cog}}° / {{vessel.ais_data.sog}} knop</v-list-tile-sub-title>
                     </v-list-tile-content>
                   </v-list-tile>
                   <v-list-tile avatar>
                     <v-list-tile-content>
-                      <v-list-tile-sub-title>Sist oppdatert: {{vessel.time_stamp}}</v-list-tile-sub-title>
+                      <v-list-tile-sub-title>Sist oppdatert: {{vessel.ais_data.time_stamp}}</v-list-tile-sub-title>
                     </v-list-tile-content>
                   </v-list-tile>
                 </v-list>
@@ -136,7 +136,7 @@
 
 <script>
   export default {
-    props: ['vessels', 'vesselStates'],
+    props: ['vessels', 'vesselStates', 'vesselStateReasons'],
     data () {
       return {
         content: 'vessel',
@@ -146,13 +146,10 @@
       }
     },
     computed: {
-      reasons () {
-        return ['Ingen', 'Verksted', 'Bemanning']
-      },
-      stateDescriptions () {
+      vesselStateDescriptions () {
         console.log(this.vesselStates)
         return this.vesselStates.map(state => {
-          return state.state_description
+          return state.description
         })
       }
     },

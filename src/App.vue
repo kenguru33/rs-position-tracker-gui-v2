@@ -10,7 +10,7 @@
         <v-btn flat>Link Three</v-btn>
       </v-toolbar-items>
     </v-toolbar>
-    <vessel-list :vessels="vessels" :vesselStates="vesselStates" @vesselSelectionChanged="setSelectedVessel($event)" ></vessel-list>
+    <vessel-list :vessels="vessels" :vesselStates="vesselStates" :vesselStateReasons="vesselStateReasons" @vesselSelectionChanged="setSelectedVessel($event)" ></vessel-list>
   </v-app>
 </template>
 
@@ -22,7 +22,7 @@ export default {
     VesselList
   },
   computed: {
-    ...mapGetters('vesselStore', ['vessels', 'selectedVessel', 'vesselStates'])
+    ...mapGetters('vesselStore', ['vessels', 'selectedVessel', 'vesselStates', 'vesselStateReasons'])
   },
   methods: {
     ...mapActions('vesselStore', ['fetchVessels', 'setSelectedVessel'])
