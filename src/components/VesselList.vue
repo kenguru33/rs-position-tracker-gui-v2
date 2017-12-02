@@ -22,95 +22,23 @@
                 </v-list-tile-content>
               </v-list-tile>
             </div>
+
             <v-flex xs12>
               <v-card>
                 <v-card-media :src="vessel.image_url" height="250px">
                 </v-card-media>
-                <v-card flat>
-                  <v-card-text>
-                    <v-container fluid>
-                      <v-layout row wrap>
-                        <v-flex xs12 md6 pr-3 pl-3>
-                          <v-select
-                            v-bind:items="vesselStateDescriptions"
-                            v-model="state"
-                            v-bind:label="vessel.state.description"
-                            single-line
-                            item-text="state"
-                            item-value="abbr"
-                            return-object
-                            hint="Endre fartøysstatus"
-                            persistent-hint
-                          ></v-select>
-                        </v-flex>
-                        <v-flex v-if="state!=='Operativ'"xs12 md6 pr-3 pl-3>
-                          <v-select
-                            v-bind:items="vesselStateReasons"
-                            v-model="reason"
-                            v-bind:label="vessel.state.reason"
-                            single-line
-                            item-text="state"
-                            item-value="abbr"
-                            return-object
-                            hint="Årsak"
-                            persistent-hint
-                          ></v-select>
-                        </v-flex>
-                      </v-layout>
-                    </v-container>
-                  </v-card-text>
-                </v-card>
+
+                <vessel-state-selector :vessel="vessel" :vesselStates="vesselStates" :vesselStateReasons="vesselStateReasons"></vessel-state-selector>
 
                 <v-divider></v-divider>
-                <v-list two-line subheader>
-                  <v-subheader>Posisjonsdata</v-subheader>
-                  <v-list-tile avatar>
-                    <v-list-tile icon>
-                      <v-icon>map</v-icon>
-                    </v-list-tile>
-                    <v-list-tile-content>
-                      <v-list-tile-title>Posisjon</v-list-tile-title>
-                      <v-list-tile-sub-title>lat: {{vessel.ais_data.latitude}} lng: {{vessel.ais_data.longitude}}</v-list-tile-sub-title>
-                    </v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile avatar>
-                    <v-list-tile icon>
-                      <v-icon>explore</v-icon>
-                    </v-list-tile>
-                    <v-list-tile-content>
-                      <v-list-tile-title>Kurs og fart</v-list-tile-title>
-                      <v-list-tile-sub-title>{{vessel.ais_data.cog}}° / {{vessel.ais_data.sog}} knop</v-list-tile-sub-title>
-                    </v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile avatar>
-                    <v-list-tile-content>
-                      <v-list-tile-sub-title>Sist oppdatert: {{vessel.ais_data.time_stamp}}</v-list-tile-sub-title>
-                    </v-list-tile-content>
-                  </v-list-tile>
-                </v-list>
+
+                <vessel-position-info :vessel="vessel"></vessel-position-info>
+
                 <v-divider></v-divider>
-                <v-list two-line subheader>
-                  <v-subheader>Kontaktinformasjon</v-subheader>
-                  <v-list-tile avatar>
-                    <v-list-tile icon>
-                      <v-icon>phone</v-icon>
-                    </v-list-tile>
-                    <v-list-tile-content>
-                      <v-list-tile-title>+47 916 79 602</v-list-tile-title>
-                      <v-list-tile-sub-title>Vakttelefon</v-list-tile-sub-title>
-                    </v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile avatar>
-                    <v-list-tile icon>
-                      <v-icon>mail</v-icon>
-                    </v-list-tile>
-                    <v-list-tile-content>
-                      <v-list-tile-title>rs102@rs.no</v-list-tile-title>
-                      <v-list-tile-sub-title>Send e-post til fartøyet</v-list-tile-sub-title>
-                    </v-list-tile-content>
-                  </v-list-tile>
-                </v-list>
-                <div class="pb-5"></div>
+
+                <vessel-contact-info :vessel="vessel"></vessel-contact-info>
+
+                <div class="pb-5 pa-3"></div>
                 <v-bottom-nav absolute :value="true" :active.sync="content" color="transparent">
                   <v-btn flat color="teal" value="vessel">
                     <span>Fartøy</span>
@@ -126,6 +54,7 @@
                   </v-btn>
                 </v-bottom-nav>
               </v-card>
+
             </v-flex>
           </v-expansion-panel-content>
         </v-expansion-panel>
@@ -135,9 +64,18 @@
 </template>
 
 <script>
+  import VesselStateSelector from '@/components/VesselStateSelector'
+  import VesselPositionInfo from '@/components/VesselPositionInfo'
+  import VesselContactInfo from '@/components/VesselContactInfo'
+
   export default {
+    components: {
+      VesselContactInfo,
+      VesselPositionInfo,
+      VesselStateSelector},
+    name: 'vessel-list',
     props: ['vessels', 'vesselStates', 'vesselStateReasons'],
-    data () {
+    data: function () {
       return {
         content: 'vessel',
         selectedVessel: null,
@@ -147,15 +85,31 @@
     },
     computed: {
       vesselStateDescriptions () {
-        console.log(this.vesselStates)
         return this.vesselStates.map(state => {
           return state.description
         })
+      },
+      showReason () {
+        if (this.state === '30min Beredskap') {
+          this.reason = null
+          return false
+        }
+        if ((this.state === 'Operativ')) {
+          this.reason = null
+          return false
+        }
+        return true
       }
     },
     methods: {
       vesselSelectionChanged (vessel) {
+        this.selectedVessel = vessel
         this.$emit('vesselSelectionChanged', vessel)
+      }
+    },
+    watch: {
+      state: function (val) {
+        console.log('state value changed', this.selectedVessel.name)
       }
     }
   }

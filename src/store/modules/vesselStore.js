@@ -41,6 +41,12 @@ export const vesselStore = {
     },
     setSelectedVessel: (context, vessel) => {
       context.commit('setSelectedVessel', vessel)
+    },
+    setVesselState: (context, vessel) => {
+      // simulate state update
+      setTimeout((vessel) => {
+        console.log('state updated')
+      }, 1000)
     }
   }
 }
