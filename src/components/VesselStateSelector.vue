@@ -1,7 +1,7 @@
 <template>
   <v-card flat>
     <v-flex pt-3 pb-2>
-    <v-btn flat fab small right absolute @click="expanded=!expanded">
+    <v-btn fab small right absolute @click="expanded=!expanded">
       <v-icon>{{icon}}</v-icon>
     </v-btn>
     <v-subheader>
@@ -86,7 +86,7 @@
         })
       },
       icon: function () {
-        return this.expanded ? 'keyboard_arrow_down' : 'keyboard_arrow_left'
+        return this.expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'
       }
     },
     watch: {

@@ -1,6 +1,6 @@
 <template>
   <v-list two-line subheader>
-    <v-btn flat fab small right absolute @click="expanded=!expanded">
+    <v-btn fab small right absolute @click="expanded=!expanded">
       <v-icon>{{icon}}</v-icon>
     </v-btn>
     <v-subheader>
@@ -46,7 +46,7 @@
     },
     computed: {
       icon: function () {
-        return this.expanded ? 'keyboard_arrow_down' : 'keyboard_arrow_left'
+        return this.expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'
       }
     }
   }

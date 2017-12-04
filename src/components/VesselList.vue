@@ -18,8 +18,9 @@
 
             <v-flex xs12>
               <v-card>
-                <v-card-media :src="vessel.image_url" height="250px">
-                </v-card-media>
+                <img class="vessel-image" :src="vessel.image_url">
+                <!--v-card-media :src="vessel.image_url" height="250px">
+                </v-card-media -->
                 <!-- TODO - use expansion panel -->
                 <vessel-state-selector
                   :stateDescription="vessel.state.description"
@@ -127,7 +128,40 @@
 </script>
 
 <style scoped>
-  .vessel-image {
-    height: 250px;
+
+
+  @media (max-width: 599px) {
+    .vessel-image {
+      width: 100%;
+      height: 200px
+    }
   }
+
+  @media (min-width: 600px) and (max-width: 959px) {
+    .vessel-image {
+      width: 100%;
+      height: 300px
+    }
+  }
+
+  @media (min-width: 960px) and (max-width: 1263px) {
+    .vessel-image {
+      width: 100%;
+      height: 350px
+    }
+  }
+  @media (min-width: 1264px) and (max-width: 1903px) {
+    .vessel-image {
+      width: 100%;
+      height: 450px
+    }
+  }
+
+  @media (min-width: 1904px) {
+    .vessel-image {
+      width: 100%;
+      height: 550px
+    }
+  }
+
 </style>
