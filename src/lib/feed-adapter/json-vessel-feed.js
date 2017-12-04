@@ -9,6 +9,8 @@ const vesselSchema = {
     name: {type: 'string', required: true},
     rs: {type: 'string', required: true},
     state: {type: 'string', required: true},
+    email: {type: 'string', required: true},
+    mobile: {type: 'string', required: true},
     station: {
       required: true,
       type: 'object',

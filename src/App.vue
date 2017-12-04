@@ -37,11 +37,5 @@ export default {
 </script>
 
 <style>
-  .stateIndicator {
-    padding: 2px;
-  }
-  .stateBullet {
-    margin-top: -2px;
-    font-size: 14px;
-  }
+
 </style>
