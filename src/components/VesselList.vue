@@ -1,10 +1,9 @@
 <template>
-  <v-container pa-0>
-    <v-layout row wrap>
-      <v-flex xs12>
+  <v-container pl-0 mt-1>
+    <v-layout row nowrap>
+      <v-flex xs12 lg6>
         <v-expansion-panel popout>
-          <v-expansion-panel-content v-for="(vessel, i) in vessels" :key="i"
-                                     @click.native="vesselSelectionChanged(vessel)">
+          <v-expansion-panel-content v-for="(vessel, mmsi) in vessels" :key="vessel.mmsi">
             <div slot="header">
               <vessel-list-header
                 :name="vessel.name"
@@ -15,58 +14,13 @@
               >
               </vessel-list-header>
             </div>
-
-            <v-flex xs12>
-              <v-card>
-                <img class="vessel-image" :src="vessel.image_url">
-                <!--v-card-media :src="vessel.image_url" height="250px">
-                </v-card-media -->
-                <!-- TODO - use expansion panel -->
-                <vessel-state-selector
-                  :stateDescription="vessel.state.description"
-                  :stateReason="''"
-                  :vesselStates="vesselStates"
-                  :vesselStateReasons="vesselStateReasons"
-                >
-                </vessel-state-selector>
-
-                <v-divider></v-divider>
-
-                <v-flex mt-3>
-                  <vessel-position-info
-                    :lat="vessel.ais_data.latitude"
-                    :lng="vessel.ais_data.longitude"
-                    :timeStamp="vessel.ais_data.time_stamp"
-                    :sog="vessel.ais_data.sog"
-                    :cog="vessel.ais_data.cog"
-                  >
-                  </vessel-position-info>
-                </v-flex>
-                <v-divider></v-divider>
-                <v-flex mt-3>
-                  <vessel-contact-info
-                    :mobile="vessel.mobile"
-                    :email="vessel.email"
-                  ></vessel-contact-info>
-                </v-flex>
-                <div class="pb-5 pa-2"></div>
-                <v-bottom-nav absolute :value="true" :active.sync="content" color="transparent">
-                  <v-btn flat color="teal" value="vessel">
-                    <span>Fartøy</span>
-                    <v-icon>info</v-icon>
-                  </v-btn>
-                  <v-btn flat color="teal" value="station">
-                    <span>Stasjon</span>
-                    <v-icon>place</v-icon>
-                  </v-btn>
-                  <v-btn flat color="teal" value="map">
-                    <span>Kart</span>
-                    <v-icon>map</v-icon>
-                  </v-btn>
-                </v-bottom-nav>
-              </v-card>
-
-            </v-flex>
+            <vessel-card
+              :vessel="vessel"
+              :vesselStates="vesselStates"
+              :vesselStateReasons="vesselStateReasons"
+              :stateDescription="vessel.state.description"
+            >
+            </vessel-card>
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-flex>
@@ -75,17 +29,13 @@
 </template>
 
 <script>
-  import VesselStateSelector from '@/components/VesselStateSelector'
-  import VesselPositionInfo from '@/components/VesselPositionInfo'
-  import VesselContactInfo from '@/components/VesselContactInfo'
   import VesselListHeader from '@/components/VesselListHeader'
+  import VesselCard from '@/components/VesselCard'
 
   export default {
     components: {
-      VesselListHeader,
-      VesselContactInfo,
-      VesselPositionInfo,
-      VesselStateSelector
+      VesselCard,
+      VesselListHeader
     },
     name: 'vessel-list',
     props: ['vessels', 'vesselStates', 'vesselStateReasons'],

@@ -3,41 +3,45 @@
  */
 export const vesselStates = [
   {
+    id: 1,
     description: 'Operativ',
+    help_text: 'Operative',
     color: '#4CAF50'
   },
   {
-    description: '30min Beredskap',
-    color: '#f44336'
-  },
-  {
-    description: 'UAD',
+    id: 2,
+    description: 'Beredskap',
+    help_text: 'Operative innen maks 30 minutter',
     color: '#FF9800'
   },
   {
+    id: 3,
     description: 'UAD',
+    help_text: 'Ute av drift',
     color: '#f44336'
   },
   {
+    id: 4,
     description: 'UAD',
+    help_text: 'Ute av drift',
     color: '#f44336'
   },
   {
-    description: 'Redusert',
-    color: '#FF9800'
+    id: 5,
+    description: 'UAD',
+    help_text: 'Ute av drift',
+    color: '#f44336'
   },
   {
-    description: '30min Beredskap',
-    color: '#4CAF50'
+    id: 6,
+    description: 'UAD',
+    help_text: 'Ute av drift',
+    color: '#f44336'
+  },
+  {
+    id: 7,
+    description: 'UAD',
+    help_text: 'Operative innen maks 30 minutter',
+    color: '#f44336'
   }
-]
-
-export const vesselStateReasons = [
-  'Ingen årsak',
-  'Personell',
-  'Teknisk Planlagt',
-  'Teknisk Uplanlagt',
-  'Forflytning',
-  'Hviletid',
-  'Operasjonelt'
 ]

@@ -15,7 +15,8 @@ const vesselSchema = {
       required: true,
       type: 'object',
       properties: {
-        name: {type: 'string', required: true}
+        name: {type: 'string', required: true},
+        region: {type: 'string', required: true}
       },
       additionalProperties: false
     }
@@ -58,18 +59,17 @@ const fetchAisData = () => {
 
 // eslint-disable-next-line no-unused-vars
 const mixAisData = (vessels, aisDataObjects) => {
-  const arr = []
   vessels.map(vessel => {
+    vessel.ais_data = {}
     aisDataObjects.map(aisData => {
       if (vessel.mmsi === aisData.mmsi) {
         delete aisData.mmsi
         vessel.ais_data = aisData
-        arr.push(vessel)
       }
     })
   })
   console.log('MIX', vessels)
-  return arr
+  return vessels
 }
 
 // Not in use
