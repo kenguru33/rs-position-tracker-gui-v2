@@ -30,7 +30,7 @@ export const removeWhiteSpaces = str => {
  */
 export const addVesselImageUrl = vessel => {
   vessel.image_url =
-    'https://raw.githubusercontent.com/kenguru33/rs-vessel-images/master/img/' +
+    process.env.IMG_URL +
     vessel.mmsi +
     '.jpg'
 }

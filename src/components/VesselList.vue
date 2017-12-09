@@ -1,5 +1,5 @@
 <template>
-  <v-container pl-0 mt-1>
+  <v-container pl-0 mt-1 pr-0>
     <v-layout row nowrap>
       <v-flex xs12 lg6>
         <v-expansion-panel popout>

@@ -50,11 +50,11 @@ export default () => {
 }
 
 const fetchVessels = () => {
-  return fetchJsonData('http://localhost:3000/api/get_vessel/*', vesselSchema)
+  return fetchJsonData(process.env.API_URL + '/api/get_vessel/*', vesselSchema)
 }
 
 const fetchAisData = () => {
-  return fetchJsonData('http://ais.rs.no/aktive_pos.json', aisDataSchema)
+  return fetchJsonData(process.env.AIS_URL, aisDataSchema)
 }
 
 // eslint-disable-next-line no-unused-vars
