@@ -46,6 +46,10 @@ export const addStateObject = vessel => {
   if (vessel.state > 1) {
     i = Math.floor((Math.random() * 5) + 1)
   }
+  // TODO: remove when state table is stable
+  if (vessel.state > 2) {
+    vessel.state = 3
+  }
   vessel.state = vesselStates[vessel.state - 1]
   vessel.state.reason = vesselStateReasons[i - 1]
 }

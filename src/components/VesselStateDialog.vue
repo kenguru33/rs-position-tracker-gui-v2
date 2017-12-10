@@ -1,13 +1,13 @@
 <template>
   <v-card color="secondary" flat>
     <v-toolbar flat style="flex: 0 0 auto;" dark>
-        <v-btn icon>
+        <v-btn icon @click="closeDialog()">
           <v-icon>close</v-icon>
         </v-btn>
       <v-icon :style="{color: newStateColor}" left>lens</v-icon>
       <v-toolbar-title>{{vessel.name}}</v-toolbar-title>
         <v-spacer></v-spacer>
-      <v-btn dark flat @click.native="">Lagre</v-btn>
+      <v-btn dark flat @click.native="saveState()">Lagre</v-btn>
     </v-toolbar>
     <v-card-text>
       <v-container fluid>
@@ -147,6 +147,30 @@
         return this.vesselStates.map(vesselState => {
           return vesselState.reason
         })
+      }
+    },
+    methods: {
+      saveState () {
+        console.log(this.vessel.rs)
+        this.vessel.state.description = this.newState
+        this.vessel.state.color = this.newStateColor
+        this.vessel.state.reason = this.newStateReason
+      },
+      closeDialog () {
+        this.$emit('closeDialog')
+        this.resetDialog()
+      },
+      resetDialog () {
+        this.newState = this.vessel.state.description
+        this.newStateColor = this.vessel.state.color
+        this.newStateReason = this.vessel.state.reason
+        this.newStation = this.vessel.station.name
+        this.newComment = 'Ingen merknader'
+        this.newDate = null
+        this.newTime = null
+        this.modalDate = false
+        this.modalTime = false
+        this.expectedBack = false
       }
     },
     created: function () {

@@ -1,6 +1,7 @@
 import fetchVessels from './json-vessel-feed'
 import {vesselStates} from './vessel-states'
 import {vesselStateReasons} from './vessel-state-reasons'
+import fetchStations from './json-station-feed'
 /**
  * Interface Vessel, Vessel states, Station etc...
  * See doc for interface specification
@@ -8,5 +9,6 @@ import {vesselStateReasons} from './vessel-state-reasons'
 export {
   fetchVessels,
   vesselStates,
-  vesselStateReasons
+  vesselStateReasons,
+  fetchStations
 }

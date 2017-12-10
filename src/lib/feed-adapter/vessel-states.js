@@ -19,8 +19,9 @@ export const vesselStates = [
     description: 'UAD',
     help_text: 'Ute av drift',
     color: '#f44336'
-  },
-  {
+  }
+
+  /* {
     id: 4,
     description: 'UAD',
     help_text: 'Ute av drift',
@@ -43,5 +44,5 @@ export const vesselStates = [
     description: 'UAD',
     help_text: 'Operative innen maks 30 minutter',
     color: '#f44336'
-  }
+  } */
 ]

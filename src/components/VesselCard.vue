@@ -8,6 +8,7 @@
         :vessel="vessel"
         :vesselStates="vesselStates"
         :vesselStateReasons="vesselStateReasons"
+        @closeDialog="showStateDialog=false"
       >
       </vessel-state-dialog>
     </v-dialog>
@@ -111,9 +112,6 @@
           return true
         }
       }
-    },
-    created: function () {
-      console.log(this.name, 'created')
     }
   }
 </script>

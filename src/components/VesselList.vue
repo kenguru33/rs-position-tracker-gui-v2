@@ -1,5 +1,8 @@
 <template>
   <v-container pl-0 mt-1 pr-0>
+    <div>
+      Vessels number totol: {{vessels.length}}
+    </div>
     <v-layout row nowrap>
       <v-flex xs12 lg6>
         <v-expansion-panel popout>
@@ -42,7 +45,8 @@
     data: function () {
       return {
         content: 'vessel',
-        selectedVessel: null
+        selectedVessel: {},
+        isLoading: true
       }
     },
     computed: {
@@ -70,7 +74,7 @@
       }
     },
     created: function () {
-      console.log(this.name, 'created')
+      console.log('vessel-list', 'created')
     }
   }
 </script>

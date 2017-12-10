@@ -4,7 +4,7 @@ export const vesselStore = {
   namespaced: true,
   state: {
     vessels: [],
-    selectedVessel: null,
+    selectedVessel: {},
     vesselStates: vesselStates,
     vesselStateReasons: vesselStateReasons
   },
