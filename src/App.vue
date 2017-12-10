@@ -1,7 +1,7 @@
 <<template>
   <v-app>
-    <v-toolbar fixed>
-      <v-toolbar-title>RS-Tracker</v-toolbar-title>
+    <v-toolbar fixed dark color="indigo darken-1">
+      <v-toolbar-title class="white--text">RS-Tracker</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-side-icon class="hidden-md-and-up"></v-toolbar-side-icon>
       <v-toolbar-items class="hidden-sm-and-down">

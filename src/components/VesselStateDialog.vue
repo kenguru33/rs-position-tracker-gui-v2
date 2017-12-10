@@ -1,15 +1,16 @@
 <template>
   <v-card color="secondary" flat>
-    <v-toolbar dark flat>
-      <v-icon color="green" left>lens</v-icon>
-      <v-toolbar-title>Endre tilstand</v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn icon>
-        <v-icon>close</v-icon>
-      </v-btn>
+    <v-toolbar flat style="flex: 0 0 auto;" dark>
+        <v-btn icon>
+          <v-icon>close</v-icon>
+        </v-btn>
+      <v-icon :style="{color: newStateColor}" left>lens</v-icon>
+      <v-toolbar-title>{{vessel.name}}</v-toolbar-title>
+        <v-spacer></v-spacer>
+      <v-btn dark flat @click.native="">Lagre</v-btn>
     </v-toolbar>
     <v-card-text>
-      <v-container fluid pt-0 pb-0>
+      <v-container fluid>
         <v-layout row wrap>
           <v-flex xs12>
             <v-select
@@ -24,7 +25,7 @@
           </v-flex>
           <v-flex xs12>
             <v-select
-              v-bind:items="states"
+              v-bind:items="vesselStateReasons"
               v-model="newStateReason"
               dark
               label="Årsak"
@@ -33,9 +34,11 @@
               prepend-icon="error"
             ></v-select>
           </v-flex>
-
           <v-layout row xs12 wrap>
-            <v-flex xs7>
+            <v-flex xs12>
+              <v-checkbox v-bind:label="'Sett forventet tilbake tid'" v-model="expectedBack" dark></v-checkbox>
+            </v-flex>
+            <v-flex xs6>
               <v-dialog
                 :close-on-content-click="false"
                 v-model="modalDate"
@@ -46,7 +49,7 @@
               >
                 <v-text-field
                   slot="activator"
-                  label="Forventet tilbake"
+                  label="Dato"
                   v-model="newDate"
                   prepend-icon="event"
                   dark
@@ -64,7 +67,7 @@
               </v-dialog>
             </v-flex>
 
-          <v-flex xs5>
+          <v-flex xs6>
             <v-menu
               lazy
               :close-on-content-click="false"
@@ -77,7 +80,7 @@
             >
               <v-text-field
                 slot="activator"
-                label=""
+                label="Klokkeslett"
                 v-model="newTime"
                 prepend-icon="access_time"
                 readonly
@@ -105,7 +108,7 @@
             <v-text-field
               name="input-marks"
               label="Merknader"
-              value="The Woodman set to work at once, and so sharp was his axe that the tree was soon chopped nearly through."
+              :value="newComment"
               multi-line
               dark
             ></v-text-field>
@@ -118,16 +121,20 @@
 
 <script>
   export default {
+    name: 'vessel-state-dialog',
     props: ['vessel', 'vesselStates', 'vesselStateReasons'],
     data: function () {
       return {
-        newState: '',
-        newStateReason: '',
-        newStation: '',
+        newState: this.vessel.state.description,
+        newStateColor: this.vessel.state.color,
+        newStateReason: this.vessel.state.reason,
+        newStation: this.vessel.station.name,
+        newComment: 'Ingen merknader',
         newDate: null,
         newTime: null,
         modalDate: false,
-        modalTime: false
+        modalTime: false,
+        expectedBack: false
       }
     },
     computed: {
@@ -141,6 +148,9 @@
           return vesselState.reason
         })
       }
+    },
+    created: function () {
+      console.log(this.name, 'created')
     }
   }
 </script>

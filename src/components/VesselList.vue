@@ -69,10 +69,8 @@
         this.$emit('vesselSelectionChanged', vessel)
       }
     },
-    watch: {
-      state: function (val) {
-        console.log('state value changed', this.selectedVessel.name)
-      }
+    created: function () {
+      console.log(this.name, 'created')
     }
   }
 </script>

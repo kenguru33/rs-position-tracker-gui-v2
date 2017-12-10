@@ -111,6 +111,9 @@
           return true
         }
       }
+    },
+    created: function () {
+      console.log(this.name, 'created')
     }
   }
 </script>
