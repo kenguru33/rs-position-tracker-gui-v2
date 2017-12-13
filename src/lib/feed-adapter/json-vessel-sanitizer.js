@@ -1,5 +1,7 @@
+/* eslint-disable no-unused-vars */
 import {vesselStates} from './vessel-states'
 import {vesselStateReasons} from '@/lib/feed-adapter/vessel-state-reasons'
+import fetchJsonData from 'json-feed-fetcher'
 
 /**
  * returns true if a nine digit string
@@ -41,17 +43,9 @@ export const addVesselImageUrl = vessel => {
  * @param {*} vessel
  */
 export const addStateObject = vessel => {
-  // TODO: remove when reasons are implemnted.
-  let i = 0
-  if (vessel.state > 1) {
-    i = Math.floor((Math.random() * 5) + 1)
-  }
-  // TODO: remove when state table is stable
-  if (vessel.state > 2) {
-    vessel.state = 3
-  }
-  vessel.state = vesselStates[vessel.state - 1]
-  vessel.state.reason = vesselStateReasons[i - 1]
+  vessel.state = vesselStates[Math.floor((Math.random() * 3))]
+  vessel.state = {...vessel.state, ...{reason: vesselStateReasons[Math.floor((Math.random() * 4) + 1)]}}
+  vessel.state = {...vessel.state, ...{note: vessel.name}}
 }
 
 /**

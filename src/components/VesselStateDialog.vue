@@ -151,10 +151,12 @@
     },
     methods: {
       saveState () {
-        console.log(this.vessel.rs)
-        this.vessel.state.description = this.newState
-        this.vessel.state.color = this.newStateColor
-        this.vessel.state.reason = this.newStateReason
+        const state = {
+          description: this.newState,
+          color: this.newStateColor,
+          reason: this.newStateReason
+        }
+        this.$emit('stateChanged', state)
       },
       closeDialog () {
         this.$emit('closeDialog')
@@ -174,7 +176,7 @@
       }
     },
     created: function () {
-      console.log(this.name, 'created')
+      // console.log(this.name, 'created')
     }
   }
 </script>

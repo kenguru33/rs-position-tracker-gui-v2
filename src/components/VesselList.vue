@@ -1,8 +1,5 @@
 <template>
   <v-container pl-0 mt-1 pr-0>
-    <div>
-      Vessels number totol: {{vessels.length}}
-    </div>
     <v-layout row nowrap>
       <v-flex xs12 lg6>
         <v-expansion-panel popout>
@@ -19,9 +16,7 @@
             </div>
             <vessel-card
               :vessel="vessel"
-              :vesselStates="vesselStates"
-              :vesselStateReasons="vesselStateReasons"
-              :stateDescription="vessel.state.description"
+              @editVesselStateClicked="showVesselStateEditDialog"
             >
             </vessel-card>
           </v-expansion-panel-content>
@@ -34,6 +29,7 @@
 <script>
   import VesselListHeader from '@/components/VesselListHeader'
   import VesselCard from '@/components/VesselCard'
+  import {mapGetters, mapActions} from 'vuex'
 
   export default {
     components: {
@@ -41,15 +37,14 @@
       VesselListHeader
     },
     name: 'vessel-list',
-    props: ['vessels', 'vesselStates', 'vesselStateReasons'],
+    fetcherServiceID: null,
     data: function () {
       return {
-        content: 'vessel',
-        selectedVessel: {},
-        isLoading: true
       }
     },
     computed: {
+      ...mapGetters('vesselStore', ['vessels', 'selectedVessel', 'vesselStates', 'vesselStateReasons']),
+      ...mapGetters('stationStore', ['stations']),
       vesselStateDescriptions () {
         return this.vesselStates.map(state => {
           return state.description
@@ -68,13 +63,25 @@
       }
     },
     methods: {
+      ...mapActions('vesselStore', ['fetchVessels', 'setSelectedVessel']),
+      ...mapActions('stationStore', ['fetchStations']),
       vesselSelectionChanged (vessel) {
         this.selectedVessel = vessel
         this.$emit('vesselSelectionChanged', vessel)
+      },
+      showVesselStateEditDialog () {
+        console.log('kokokok')
       }
     },
-    created: function () {
-      console.log('vessel-list', 'created')
+    created () {
+      this.fetchVessels()
+      this.fetchStations()
+      this.fetcherServiceID = setInterval(() => {
+        this.fetchVessels()
+      }, 30000)
+    },
+    destroyed () {
+      clearInterval(this.fetcherServiceID)
     }
   }
 </script>

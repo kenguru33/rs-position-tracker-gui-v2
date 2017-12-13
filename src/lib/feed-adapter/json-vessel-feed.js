@@ -64,7 +64,7 @@ const mixAisData = (vessels, aisDataObjects) => {
     aisDataObjects.map(aisData => {
       if (vessel.mmsi === aisData.mmsi) {
         delete aisData.mmsi
-        vessel.ais_data = aisData
+        vessel.ais_data = {...vessel.ais_data, ...aisData}
       }
     })
   })

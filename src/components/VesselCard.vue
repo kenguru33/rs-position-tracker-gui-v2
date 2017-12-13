@@ -1,17 +1,5 @@
 <template>
   <v-card class="grey lighten-3">
-    <v-dialog
-      v-model="showStateDialog"
-      max-width="500px"
-    >
-      <vessel-state-dialog
-        :vessel="vessel"
-        :vesselStates="vesselStates"
-        :vesselStateReasons="vesselStateReasons"
-        @closeDialog="showStateDialog=false"
-      >
-      </vessel-state-dialog>
-    </v-dialog>
     <v-card-media
       class="white--text"
       height="200px"
@@ -22,13 +10,13 @@
       <v-layout row nowrap>
         <v-flex xs12>
           <v-list three-line>
-            <v-subheader>Fartøystilstand
+            <v-subheader>Fartøysstatus
               <v-spacer></v-spacer>
-              <v-btn flat fab small @click="showStateDialog=true">
+              <v-btn flat fab small @click="editVesselStateClicked">
                 <v-icon small>edit</v-icon>
               </v-btn>
             </v-subheader>
-            <v-divider></v-divider>
+
 
               <v-list-tile avatar>
                 <v-list-tile-avatar>
@@ -44,7 +32,7 @@
                     COG: {{vessel.ais_data.cog}}°
                   </v-list-tile-sub-title>
                   <v-list-tile-sub-title v-if="!isOperative">
-                    {{vessel.state.reason || 'Årsak ikke gitt'}}
+                    {{vessel.state.reason.description || 'Årsak ikke gitt'}}
                   </v-list-tile-sub-title>
                 </v-list-tile-content>
               </v-list-tile>
@@ -75,8 +63,8 @@
                 </v-list-tile-avatar>
                 <v-list-tile-content>
                   <v-list-tile-title>Merknader</v-list-tile-title>
-                  <v-list-tile-sub-title>Planlegger verkstedsopphold innen 3 uker. Antar å være ut av drift 3 dager. RS
-                    Skomvær III blir satt inn i denne perioden.
+                  <v-list-tile-sub-title>
+                    {{vessel.state.note}}
                   </v-list-tile-sub-title>
                 </v-list-tile-content>
               </v-list-tile>
@@ -100,17 +88,19 @@
       VesselStateDialog
     },
     name: 'vessel-card',
-    props: ['vessel', 'vesselStateReasons', 'vesselStates'],
+    props: ['vessel'],
     data: function () {
       return {
-        showStateDialog: false
       }
     },
     computed: {
       isOperative: function () {
-        if (this.vessel.state.description === 'Operativ' || this.vessel.state.description === 'Beredskap') {
-          return true
-        }
+        return this.vessel.state.id < 3
+      }
+    },
+    methods: {
+      editVesselStateClicked: function () {
+        this.$emit('editVesselStateClicked', this.vessel)
       }
     }
   }

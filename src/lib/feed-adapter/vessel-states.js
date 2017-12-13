@@ -5,19 +5,19 @@ export const vesselStates = [
   {
     id: 1,
     description: 'Operativ',
-    help_text: 'Operative',
+    help_text: 'Fartøyet er operativ',
     color: '#4CAF50'
   },
   {
     id: 2,
     description: 'Beredskap',
-    help_text: 'Operative innen maks 30 minutter',
+    help_text: 'Fartøyet er operativ innen maks 30 minutter',
     color: '#FF9800'
   },
   {
     id: 3,
     description: 'UAD',
-    help_text: 'Ute av drift',
+    help_text: 'Fartøyet er ute av drift',
     color: '#f44336'
   }
 

@@ -13,10 +13,12 @@
 <script>
   import {mapGetters, mapActions} from 'vuex'
   import VesselList from '@/components/VesselList.vue'
+  import StationCard from './StationCard'
 
   let fetcherServiceID = null
   export default {
     components: {
+      StationCard,
       VesselList: VesselList
     },
     computed: {
