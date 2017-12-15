@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
-import {vesselStates} from './vessel-states'
-import {vesselStateReasons} from '@/lib/feed-adapter/vessel-state-reasons'
-import fetchJsonData from 'json-feed-fetcher'
+import {vesselStates, vesselState, vesselStateReason} from '../models/vessel-states'
+import {vesselStateReasons} from '../models/vessel-state-reasons'
 
 /**
  * returns true if a nine digit string
@@ -43,9 +42,25 @@ export const addVesselImageUrl = vessel => {
  * @param {*} vessel
  */
 export const addStateObject = vessel => {
+  'strict'
+  // just randomize states for testing purpose
   vessel.state = vesselStates[Math.floor((Math.random() * 3))]
-  vessel.state = {...vessel.state, ...{reason: vesselStateReasons[Math.floor((Math.random() * 4) + 1)]}}
-  vessel.state = {...vessel.state, ...{note: vessel.name}}
+  for (const state in vesselState) {
+    if (vesselState[state].id === parseInt(vessel.state)) {
+      vessel.state = vesselState[state]
+    }
+  }
+  let t = [
+    vesselStateReason.tekniskPlanlagt,
+    vesselStateReason.personell,
+    vesselStateReason.hviletid,
+    vesselStateReason.Operasjonelt,
+    vesselStateReason.tekniskUforutsett
+  ]
+  vessel.state.reason = t[Math.floor((Math.random() * 4) + 1)]
+  // vessel.state = vesselStates[Math.floor((Math.random() * 3))]
+  // vessel.state = {...vessel.state, ...{reason: vesselStateReasons[Math.floor((Math.random() * 4) + 1)]}}
+  // vessel.state = {...vessel.state, ...{note: vessel.name}}
 }
 
 /**

@@ -34,7 +34,7 @@
       this.fetchStations()
       fetcherServiceID = setInterval(() => {
         this.fetchVessels()
-      }, 30000)
+      }, 3000)
     },
     destroyed () {
       clearInterval(fetcherServiceID)

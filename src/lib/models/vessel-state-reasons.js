@@ -25,3 +25,7 @@ export const vesselStateReasons = [
     help_text: 'Is- og snøforhold'
   }
 ]
+
+export const getStateReason = id => {
+  return vesselStateReasons[id - 1]
+}
